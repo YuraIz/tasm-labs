@@ -36,7 +36,7 @@ main:
 	cmp ax, bx
 	jne firsttrue
 	mov ax, a
-	cmp ax, b
+	cmp ax, d
 	ja firsttrue
 firstfalse:
     mov ax, b
