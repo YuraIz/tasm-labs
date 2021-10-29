@@ -10,18 +10,18 @@ exit:
     mov al, 0
     int 21h
 readnum:
-	mov bx, 0
+    mov bx, 0
     mov ah, 01h
     int 21h
     cmp al, 2dh
-	je negative
-	call analyze
-	ret
+    je negative
+    call analyze
+    ret
 negative:
-	call rpos
-	not bx 
-	add bx, 1
-	ret
+    call rpos
+    not bx 
+    add bx, 1
+    ret
 rpos:
     mov ah, 01h
     int 21h
@@ -32,46 +32,46 @@ analyze:
     je endl
     sub al, 48
     mov ah, 0
-	push ax
-	mov ax, 10
+    push ax
+    mov ax, 10
     mul bx
     mov bx, ax
-	pop ax
+    pop ax
     add bx, ax
     call rpos
 endl:
-	ret
+    ret
 printnum:
-	cmp ax, 0
-	jz pzero
-	jnl ppos
-	mov dl, '-'
-	push ax
-	mov ah, 02h
-	int 21h
-	pop ax
-	not ax 
-	add ax, 1
+    cmp ax, 0
+    jz pzero
+    jnl ppos
+    mov dl, '-'
+    push ax
+    mov ah, 02h
+    int 21h
+    pop ax
+    not ax 
+    add ax, 1
 ppos:
 ;used: ax dx bx 
-	cmp ax, 0
-	jz zero
-	mov dx, 0
-	mov bx, 10
-	div bx    
-	add dl, 48
-	push dx
-	call ppos
-	pop dx
-	push ax
-	mov ah, 02h
-	int 21h
-	pop ax
+    cmp ax, 0
+    jz zero
+    mov dx, 0
+    mov bx, 10
+    div bx    
+    add dl, 48
+    push dx
+    call ppos
+    pop dx
+    push ax
+    mov ah, 02h
+    int 21h
+    pop ax
 zero:
-	ret
+    ret
 pzero:
-	mov dl, 30h
-	mov ah, 02h
-	int 21h
-	ret
+    mov dl, 30h
+    mov ah, 02h
+    int 21h
+    ret
 end main

@@ -19,76 +19,76 @@ d dw ?
 
 .code
 main:
-	mov ax, @data
-	mov ds, ax
-	call readnum
-	mov a, bx
-	call readnum
-	mov b, bx
-	call readnum
-	mov c, bx
-	call readnum
-	mov d, bx
-	mov ax, a
-	mul c
-	mov bx, b
-	sub bx, d
-	cmp ax, bx
-	jne firsttrue
-	mov ax, a
-	cmp ax, d
-	ja firsttrue
+    mov ax, @data
+    mov ds, ax
+    call readnum
+    mov a, bx
+    call readnum
+    mov b, bx
+    call readnum
+    mov c, bx
+    call readnum
+    mov d, bx
+    mov ax, a
+    mul c
+    mov bx, b
+    sub bx, d
+    cmp ax, bx
+    jne firsttrue
+    mov ax, a
+    cmp ax, d
+    ja firsttrue
 firstfalse:
     mov ax, b
     sub ax, c
     mov bx, a
-	add bx, d
-	ja secondfalse
-	mov ax, a
-	cmp ax, b
-	jnl secondfalse
+    add bx, d
+    ja secondfalse
+    mov ax, a
+    cmp ax, b
+    jnl secondfalse
 secondtrue:
-	;print(b * b - d + c)
-	mov ax, b
-	mul b
-	sub ax, d
-	add ax, c
-	jmp print
+    ;print(b * b - d + c)
+    mov ax, b
+    mul b
+    sub ax, d
+    add ax, c
+    jmp print
 secondfalse:
-	;print(2 * c + 3 * d - 5)
-	mov ax, 3
-	mul d
-	add ax, c
-	add ax, c
-	sub ax, 5
-	jmp print
+    ;print(2 * c + 3 * d - 5)
+    mov ax, 3
+    mul d
+    add ax, c
+    add ax, c
+    sub ax, 5
+    jmp print
 firsttrue:
-	;print(a - b * (c + d))
-	mov ax, c
-	add ax, d
-	mul b
-	mov bx, ax
-	mov ax, a
-	sub ax, bx
+    ;print(a - b * (c + d))
+    mov ax, c
+    add ax, d
+    mul b
+    mov bx, ax
+    mov ax, a
+    sub ax, bx
 print:
-	call printnum
+    call printnum
 exit:
     mov ah, 04Ch
     mov al, 0
     int 21h
 readnum:
-	mov bx, 0
+    mov bx, 0
     mov ah, 01h
     int 21h
     cmp al, 2dh
-	je negative
-	call analyze
-	ret
+    je negative
+    call analyze
+    ret
 negative:
-	call rpos
-	not bx 
-	inc bx
-	ret
+    call rpos
+    not bx 
+    inc bx
+    ret
 rpos:
     mov ah, 01h
     int 21h
@@ -99,46 +99,46 @@ analyze:
     je endl
     sub al, 48
     mov ah, 0
-	push ax
-	mov ax, 10
+    push ax
+    mov ax, 10
     mul bx
     mov bx, ax
-	pop ax
+    pop ax
     add bx, ax
     call rpos
 endl:
-	ret
+    ret
 printnum:
-	cmp ax, 0
-	jz pzero
-	jnl ppos
-	mov dl, '-'
-	push ax
-	mov ah, 02h
-	int 21h
-	pop ax
-	not ax 
-	inc ax
+    cmp ax, 0
+    jz pzero
+    jnl ppos
+    mov dl, '-'
+    push ax
+    mov ah, 02h
+    int 21h
+    pop ax
+    not ax 
+    inc ax
 ppos:
 ;used: ax dx bx 
-	cmp ax, 0
-	jz zero
-	mov dx, 0
-	mov bx, 10
-	div bx    
-	add dl, 48
-	push dx
-	call ppos
-	pop dx
-	push ax
-	mov ah, 02h
-	int 21h
-	pop ax
+    cmp ax, 0
+    jz zero
+    mov dx, 0
+    mov bx, 10
+    div bx    
+    add dl, 48
+    push dx
+    call ppos
+    pop dx
+    push ax
+    mov ah, 02h
+    int 21h
+    pop ax
 zero:
-	ret
+    ret
 pzero:
-	mov dl, 30h
-	mov ah, 02h
-	int 21h
-	ret
+    mov dl, 30h
+    mov ah, 02h
+    int 21h
+    ret
 end main
