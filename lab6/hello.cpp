@@ -1,8 +1,8 @@
 #include <iostream>
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
     int count = 0;
-    int *p = &count;
+    int* p = &count;
 
     for (int i = 0; i < 10; i++) {
         (*p)++; // Что тут написано?

@@ -3,7 +3,6 @@
 .data
 ;error string
     strerr db "Bad input$"
-    strerr2 db "Wrong size$"
 
     n dw ?
     m dw ?
@@ -18,13 +17,6 @@
 error:
     mov ah, 09h
     mov dx, offset strerr
-    int 21h
-    jmp exit 
-
-
-error2:
-    mov ah, 09h
-    mov dx, offset strerr2
     int 21h
     jmp exit 
 
@@ -235,12 +227,12 @@ push_loop2:
 
     mov cx, bp
     mov bp, 0
-    mov bx, 0
+    mov bx, 255
 search_loop:
     pop ax
     pop di
     cmp ax, bx
-    jna old_max
+    jnl old_max
 new_max:
     mov dx, di
     mov bx, ax
